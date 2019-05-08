@@ -5,3 +5,5 @@ It's from [The Net Ninja](https://www.thenetninja.co.uk/), an awesome youtuber a
 
 ## Interesting things made during the course:
 - [/](https://github.com/kammradt/udemy-vuejs-firebase/tree/master)
+- [Review: ES6](https://github.com/kammradt/udemy-vuejs-firebase/tree/master/basic-review-es6)
+- [Review: Vue](https://github.com/kammradt/udemy-vuejs-firebase/tree/master/basic-review-vue)

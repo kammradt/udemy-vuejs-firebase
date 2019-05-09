@@ -1,11 +1,10 @@
 <template>
   <div id="app">
     <h1>Hi there!</h1>
-    <p>{{ greet }}</p>
-    <p>{{ sayLorem() }}</p>
-    <a :href="githubUrl" target="_blank">github.com/kammradt</a>
-    <p :class="classes">Inspect my classes!</p>
-    <p @click="clicks++"> This text was pressed {{ clicks }} times.</p>
+    <p>X: {{ coords.x }} | Y: {{ coords.y }} </p>
+    <div class="canvas" @mousemove="getCoords">
+
+    </div>
   </div>
 </template>
 
@@ -15,15 +14,16 @@ export default {
   name: 'app',
   data() {
     return {
-      greet: 'Good to see you here!',
-      githubUrl: 'https://github.com/kammradt',
-      classes: ['red', 'blue', 'from', 'an', 'array'],
-      clicks: 0
+      coords: {
+        x: 0,
+        y: 0
+      }
     }
   },
-  methods:{
-    sayLorem() {
-      return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  methods: {
+    getCoords(e) {
+      this.coords.x = e.offsetX
+      this.coords.y = e.offsetY
     }
   }
 }
@@ -37,5 +37,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.canvas {
+  width: 300px;
+  height: 300px;
+  margin-top: 20px;
+  background: #ddd;
+  margin: auto
 }
 </style>

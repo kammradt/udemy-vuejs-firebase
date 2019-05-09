@@ -5,6 +5,7 @@
     <p>{{ sayLorem() }}</p>
     <a :href="githubUrl" target="_blank">github.com/kammradt</a>
     <p :class="classes">Inspect my classes!</p>
+    <p @click="clicks++"> This text was pressed {{ clicks }} times.</p>
   </div>
 </template>
 
@@ -16,7 +17,8 @@ export default {
     return {
       greet: 'Good to see you here!',
       githubUrl: 'https://github.com/kammradt',
-      classes: ['red', 'blue', 'from', 'an', 'array']
+      classes: ['red', 'blue', 'from', 'an', 'array'],
+      clicks: 0
     }
   },
   methods:{

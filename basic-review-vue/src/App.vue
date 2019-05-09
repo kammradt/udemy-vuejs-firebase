@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <h1>Hi there!</h1>
-    <p>{{ text }}</p>
-    <p>{{ sayHello() }}</p>
+    <p>{{ greet }}</p>
+    <p>{{ sayLorem() }}</p>
+    <a :href="githubUrl" target="_blank">github.com/kammradt</a>
+    <p :class="classes">Inspect my classes!</p>
   </div>
 </template>
 
@@ -12,13 +14,14 @@ export default {
   name: 'app',
   data() {
     return {
-      text: 'Variable!',
-      name: 'John'
+      greet: 'Good to see you here!',
+      githubUrl: 'https://github.com/kammradt',
+      classes: ['red', 'blue', 'from', 'an', 'array']
     }
   },
   methods:{
-    sayHello() {
-      return `Hello ${this.name}!`
+    sayLorem() {
+      return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     }
   }
 }

@@ -2,7 +2,7 @@ var users = [
     {name: 'vini', vip: true},
     {name: 'kamm', vip: false},
     {name: 'cast', vip: true},
-    {name: 'zand', vip: false},
+    {name: 'zand', vip: true},
     {name: 'alve', vip: true},
 ]
 

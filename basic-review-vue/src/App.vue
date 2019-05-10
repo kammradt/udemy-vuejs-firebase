@@ -1,8 +1,12 @@
 <template>
   <div id="app">
     <h1>Hi there!</h1>
-    <button @click="showName = !showName">{{ buttonText }}</button>
-    <p v-if="showName">Hi!</p>
+    <ul>
+      <li v-for="person in people" :key="person.name">
+        <p>Name: {{ person.name }}</p>
+        <p>Age: {{ person.age }}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,12 +16,12 @@ export default {
   name: 'app',
   data() {
     return {
-      showName: false
-    }
-  },
-  computed: {
-    buttonText() {
-      return this.showName ? 'Hide!' : 'Show!';
+      people: [
+        { name: 'alvezin ', age: '20' },
+        { name: 'kammzin ', age: '19' },
+        { name: 'castiin ', age: '12' },
+        { name: 'malquin ', age: '30' },
+      ]
     }
   }
 }

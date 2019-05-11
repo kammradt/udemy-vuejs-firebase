@@ -1,26 +1,27 @@
 <template>
   <div id="app">
     <h1>Hi there!</h1>
-    <ul>
-      <li v-for="person in people" :key="person.name">
-        <p>Name: {{ person.name }}</p>
-        <p>Age: {{ person.age }}</p>
-      </li>
-    </ul>
+    <AllFriends :friends="friends" />
+    <OnlineFriends :friends="friends" />
   </div>
 </template>
 
 <script>
+import AllFriends from '@/components/AllFriends'
+import OnlineFriends from '@/components/OnlineFriends'
 
 export default {
   name: 'app',
+  components: {
+    AllFriends, OnlineFriends
+  },
   data() {
     return {
-      people: [
-        { name: 'alvezin ', age: '20' },
-        { name: 'kammzin ', age: '19' },
-        { name: 'castiin ', age: '12' },
-        { name: 'malquin ', age: '30' },
+      friends: [
+        { name: 'Kamm', online: true },
+        { name: 'Alve', online: true },
+        { name: 'Cast', online: false },
+        { name: 'Natn', online: false }
       ]
     }
   }

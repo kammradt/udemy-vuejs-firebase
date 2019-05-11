@@ -1,15 +1,26 @@
 <template>
-  <div>
-      <h2>All friends</h2>
-      <div v-for="friend in friends" :key="friend.name">
-        <span>{{ friend.name }}</span>
-      </div>
+  <div id="all-friends">
+    <h2>All Friends</h2>
+    <div v-for="(friend, index) in friends" :key="index">
+      <span @click="unfriend(friend.name)">{{ friend.name }} <button>x</button></span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AllFriends',
-  props: ['friends']
+  props: ['friends'],
+  methods: {
+    unfriend(name){
+      this.$emit('delete', { name })
+    }
+  }
 }
 </script>
+
+<style scoped>
+button {
+  color: red
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Hi there!</h1>
-    <AllFriends :friends="friends" />
+    <AllFriends :friends="friends" @delete="deleteFriend"/>
     <OnlineFriends :friends="friends" />
   </div>
 </template>
@@ -23,6 +23,14 @@ export default {
         { name: 'Cast', online: false },
         { name: 'Natn', online: false }
       ]
+    }
+  },
+  methods: {
+    deleteFriend(payload){
+      // this.friends.pop(payload.name)
+      this.friends = this.friends.filter(friend => {
+        return friend.name !== payload.name
+      })
     }
   }
 }

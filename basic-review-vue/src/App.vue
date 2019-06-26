@@ -5,7 +5,8 @@
     <OnlineFriends :friends="friends" />
     <br>
     {{ error }}
-    <div  v-for="post in posts" :key="post.id">
+    <input type="text" v-model="searchKeyword">
+    <div  v-for="post in filteredPosts" :key="post.id">
       <p> <strong> {{ post.title }} </strong> </p>
       <p> {{ post.body | cuttingUntil50}}</p>
       <br>
@@ -33,7 +34,15 @@ export default {
         { name: 'Natn', online: false }
       ],
       posts: [],
-      error: null
+      error: null,
+      searchKeyword: ''
+    }
+  },
+  computed: {
+    filteredPosts() {
+      return this.posts.filter(post => {
+        return post.title.includes(this.searchKeyword)
+      })
     }
   },
   created() {

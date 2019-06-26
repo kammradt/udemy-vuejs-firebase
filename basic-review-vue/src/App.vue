@@ -3,12 +3,21 @@
     <h1>Hi there!</h1>
     <AllFriends :friends="friends" @delete="deleteFriend"/>
     <OnlineFriends :friends="friends" />
+    <br>
+    {{ error }}
+    <div  v-for="post in posts" :key="post.id">
+      <p> <strong> {{ post.title }} </strong> </p>
+      <p> {{ post.body | cuttingUntil50}}</p>
+      <br>
+    </div>
+
   </div>
 </template>
 
 <script>
 import AllFriends from '@/components/AllFriends'
 import OnlineFriends from '@/components/OnlineFriends'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -22,8 +31,18 @@ export default {
         { name: 'Alve', online: true },
         { name: 'Cast', online: false },
         { name: 'Natn', online: false }
-      ]
+      ],
+      posts: [],
+      error: null
     }
+  },
+  created() {
+    axios.get('https://jsonplaceholder.typicode.com/posts/')
+    .then(response => {
+      this.posts = response.data
+    }).catch(error => {
+      this.error = error
+    })
   },
   methods: {
     deleteFriend(payload){

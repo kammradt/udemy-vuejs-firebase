@@ -40,10 +40,10 @@ export default {
   created(){
     db.collection('smoothies')
       .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          let smoothie = doc.data()
-          smoothie.id = doc.id
+      .then(response => {
+        response.forEach(record => {
+          let smoothie = record.data()
+          smoothie.id = record.id
           this.smoothies.push(smoothie)
         });
       })

@@ -27,6 +27,8 @@
             <v-text-field
               v-model="smoothie.ingredients[index]"
               :label="`ingredient ${index + 1}`"
+              :prepend-inner-icon="'delete'"
+              @click:prepend-inner="deleteIngredient(ingredient)"
             />
           </v-flex>
           <v-btn @click="addSmoothie" v-text="'Add smoothie'" color="primary" />
@@ -38,7 +40,7 @@
 
 <script>
 import db from '@/firebase/init'
-import setTimeout from 'timers'
+import { setTimeout } from 'timers'
 import slugify from 'slugify'
 
 export default {
@@ -74,14 +76,12 @@ export default {
           .then(() => {
             this.$router.push({ name: 'Index' })
           })
-          .catch(error => {
-            console.log(error)
-          })
 
       } else {
         this.smoothie.errorText = 'Enter a valid smoothie title!'
         this.smoothie.isInvalid = true
-        setTimeout(() => { this.smoothie.isInvalid = false }, 2000)
+        setTimeout(() => this.smoothie.isInvalid = false, 2000)
+
       }
     },
     addIngredient() {
@@ -92,8 +92,14 @@ export default {
       } else {
         this.smoothie.errorText = 'Enter a valid ingredient!'
         this.smoothie.isInvalid = true
-        setTimeout(() => { this.smoothie.isInvalid = false }, 2000)
+        setTimeout(() => this.smoothie.isInvalid = false, 2000)
+
       }
+    },
+    deleteIngredient(deletedIngredient) {
+      this.smoothie.ingredients = this.smoothie.ingredients.filter(ingredient => {
+        return deletedIngredient != ingredient
+      }) 
     }
   }
 }

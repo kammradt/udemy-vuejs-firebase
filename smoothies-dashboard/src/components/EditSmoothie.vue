@@ -10,7 +10,6 @@
       >
         Edit <span class="font-weight-light primary--text"> {{ this.smoothie.title }}</span> !
       </v-flex>
-      {{smoothie}}
       <v-form @submit.prevent="editSmoothie">
         <v-layout column>
           <v-text-field label="Smoothie name" v-model="smoothie.title"/>

@@ -7,6 +7,11 @@
             <v-card-title class="font-weight-light headline">
               {{ smoothie.title }}
               <v-spacer></v-spacer>
+              <router-link :to=" { name: 'EditSmoothie', params: { smoothie_slug: smoothie.slug } } ">
+                <v-btn icon dark outline color="secondary">
+                  <v-icon>edit</v-icon>
+                </v-btn>
+              </router-link>
               <v-btn @click="deleteSmoothie(smoothie.id)" icon dark outline color="error">
                 <v-icon>delete</v-icon>
               </v-btn>

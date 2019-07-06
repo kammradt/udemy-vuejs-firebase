@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container grid-list-md>
+    <v-container grid-list-md v-if="smoothie">
       <v-flex
         xs12
         font-weight-thin
@@ -8,20 +8,21 @@
         class="secondary--text"
         text-xs-center
       >
-        Add a new <span class="font-weight-light primary--text">Smoothie!</span>
+        Edit <span class="font-weight-light primary--text"> {{ this.smoothie.title }}</span> !
       </v-flex>
-      <v-form @submit.prevent="AddSmoothie">
+      {{smoothie}}
+      <v-form @submit.prevent="editSmoothie">
         <v-layout column>
           <v-text-field label="Smoothie name" v-model="smoothie.title"/>
           <v-text-field
             @keydown.enter="addIngredient"
-            v-model="smoothie.ingredient"
+            v-model="ingredient"
             label="Ingredients"
             hint="Press 'Enter' to add"
             class="mb-3"
           />
-          <v-alert timeout="2000" :value="smoothie.isInvalid" color="primary" type="error" dismissible>
-            <span class="font-weight-light subheading"> {{ smoothie.errorText }} </span>
+          <v-alert timeout="2000" :value="isInvalid" color="primary" type="error" dismissible>
+            <span class="font-weight-light subheading"> {{ errorText }} </span>
           </v-alert>
           <v-flex v-for="(ingredient, index) in smoothie.ingredients" :key="index">
             <v-text-field
@@ -31,7 +32,7 @@
               @click:prepend-inner="deleteIngredient(ingredient)"
             />
           </v-flex>
-          <v-btn @click="addSmoothie" v-text="'Add smoothie'" color="primary" />
+          <v-btn @click="editSmoothie" v-text="'Update smoothie'" color="primary" />
         </v-layout>
       </v-form>
     </v-container>
@@ -40,27 +41,30 @@
 
 <script>
 import db from '@/firebase/init'
-import { setTimeout } from 'timers'
 import slugify from 'slugify'
 
 export default {
-  name: 'AddSmoothie',
+  name: 'EditSmoothie',
   data() {
     return {
-      smoothie: {
-        title: null,
-        ingredient: null,
-        ingredients: [],
-        slug: null,
-        isInvalid: false,
-        errorText: null
-      }
+      smoothie: null,
+      ingredient: null,
+      isInvalid: false,
+      errorText: null
     }
   },
+  created() {
+    let search = db.collection('smoothies').where('slug', '==', this.$route.params.smoothie_slug)
+    search.get().then(response => {
+      response.forEach(record => {
+        this.smoothie = record.data()
+        this.smoothie.id = record.id
+      });
+    })
+  },
   methods: {
-    addSmoothie() {
+    editSmoothie() {
       if (this.smoothie.title) {
-
         this.smoothie.slug = slugify(this.smoothie.title, {
           replacement: '-',
           remove: /[$*_+~.()'"!\-:@]/g,
@@ -68,7 +72,8 @@ export default {
         })
 
         db.collection('smoothies')
-          .add({
+          .doc(this.smoothie.id)
+          .update({
             title: this.smoothie.title,
             ingredients: this.smoothie.ingredients,
             slug: this.smoothie.slug
@@ -78,21 +83,21 @@ export default {
           })
 
       } else {
-        this.smoothie.errorText = 'Enter a valid smoothie title!'
-        this.smoothie.isInvalid = true
-        setTimeout(() => this.smoothie.isInvalid = false, 2000)
+        this.errorText = 'Enter a valid smoothie title!'
+        this.isInvalid = true
+        setTimeout(() => this.isInvalid = false, 2000)
 
       }
     },
     addIngredient() {
-      if (this.smoothie.ingredient) {
-        this.smoothie.ingredients.push(this.smoothie.ingredient)
-        this.smoothie.ingredient = null
-        this.smoothie.isInvalid = false
+      if (this.ingredient) {
+        this.smoothie.ingredients.push(this.ingredient)
+        this.ingredient = null
+        this.isInvalid = false
       } else {
-        this.smoothie.errorText = 'Enter a valid ingredient!'
-        this.smoothie.isInvalid = true
-        setTimeout(() => this.smoothie.isInvalid = false, 2000)
+        this.errorText = 'Enter a valid ingredient!'
+        this.isInvalid = true
+        setTimeout(() => this.isInvalid = false, 2000)
       }
     },
     deleteIngredient(deletedIngredient) {

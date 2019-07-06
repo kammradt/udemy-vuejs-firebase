@@ -10,6 +10,7 @@ It's from [The Net Ninja](https://www.thenetninja.co.uk/), an awesome youtuber a
 -  [Review: ES6](https://github.com/kammradt/udemy-vuejs-firebase/tree/master/basic-review-es6)
 -  [Review: Vue](https://github.com/kammradt/udemy-vuejs-firebase/tree/master/basic-review-vue)
 -  [Vue Router](https://github.com/kammradt/udemy-vuejs-firebase/tree/master/learning-routing)
+-  [Smoothies App](https://github.com/kammradt/udemy-vuejs-firebase/tree/master/smoothies-dashboard)
 
 ### [:white_check_mark:] Smoothies
 The first project intend to introduce the Firebase platform and how to perform CRUD operations. Further more, we can also host our app: [Smoothies App](https://smoothies-dashboard.firebaseapp.com/#/)

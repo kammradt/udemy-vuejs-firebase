@@ -46,7 +46,10 @@ export default {
   methods: {
     enterChat () {
       if (this.$refs.form.validate()) {
-        console.log(this.name)
+        this.$router.push({
+          name: 'Chat',
+          params: { name: this.name }
+        })
         this.clear()
       }
     },

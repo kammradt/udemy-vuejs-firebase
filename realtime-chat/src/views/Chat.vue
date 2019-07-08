@@ -9,19 +9,24 @@
         text-xs-center
         pt-4
       />
-      <v-layout row wrap ma-3>
-        <v-flex xs12 v-for="i in [1,2,3,4,5,6]" :key="i" my-2>
+      <v-layout row wrap ma-3 class="chat" v-chat-scroll>
+        <v-flex
+          xs12
+          my-2
+          v-for="message in messages"
+          :key="message.id"
+        >
           <v-flex
-            v-text="`Name: ${i}: `"
+            v-text="`${message.name}: `"
             d-inline
             primary--text
           />
           <v-flex
-            v-text="`Message: ${i}`"
+            v-text="message.content"
             d-inline
           />
           <v-flex
-            v-text="`Time ${i}`"
+            v-text="message.timestamp"
             caption
             grey--text
           />
@@ -36,6 +41,7 @@
 
 <script>
 import NewMessage from '@/components/NewMessage'
+import db from '@/firebase/init'
 
 export default {
   name: 'Chat',
@@ -47,7 +53,47 @@ export default {
   },
   data () {
     return {
+      messages: []
     }
+  },
+  created () {
+    let listener = db.collection('messages').orderBy('timestamp')
+    listener.onSnapshot(response => {
+      response.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          let doc = change.doc
+          this.messages.push({
+            id: doc.id,
+            name: doc.data().name,
+            content: doc.data().content,
+            timestamp: doc.data().timestamp
+          })
+        }
+      })
+    })
   }
 }
 </script>
+
+<style>
+.chat{
+  max-height: 400px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>

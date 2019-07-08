@@ -9,10 +9,11 @@
           :counter="200"
           required
           class="pb-3"
+          @keydown.enter="addMessage"
         />
         <v-btn
           @click="addMessage"
-          v-text="'Enter'"
+          v-text="'Send'"
           color="primary"
           class="headline font-weight-light"
           block
@@ -23,6 +24,9 @@
 </template>
 
 <script>
+import db from '@/firebase/init'
+import moment from 'moment'
+
 export default {
   name: 'NewMessage',
   props: {
@@ -40,11 +44,12 @@ export default {
   methods: {
     addMessage () {
       if (this.$refs.form.validate()) {
-        console.log(
-          this.message,
-          this.name,
-          Date.now()
-        )
+        db.collection('messages')
+          .add({
+            content: this.message,
+            name: this.name,
+            timestamp: moment(Date.now()).format('lll')
+          })
         this.clear()
       }
     },

@@ -16,7 +16,7 @@ It's from [The Net Ninja](https://www.thenetninja.co.uk/), an awesome youtuber a
 ### [:white_check_mark:] Smoothies
 The first project intend to introduce the Firebase platform and how to perform CRUD operations. Further more, we can also host our app: [Smoothies App](https://smoothies-dashboard.firebaseapp.com/#/)
 
-### [:x:] Real Time Chat
+### [:white_check_mark:] Chat
 The second project intend to explore the real-time data that firebase with firestore can provide. It is a simple chat app that refresh on each new message recivied. You can play here: [Chat App](https://realtime-chat-vue.firebaseapp.com/)
 
 ### [:x:] Geo Friends

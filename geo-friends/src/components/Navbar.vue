@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar>
+  <v-toolbar floating class="my-2">
     <v-toolbar-title class="display-1">
       Geo <span class="font-weight-light" v-text="'Friends'" />
     </v-toolbar-title>

@@ -1,19 +1,19 @@
 <template>
-  <v-toolbar floating class="my-2">
+  <v-toolbar class="mb-2">
     <v-toolbar-title class="display-1">
-      Geo <span class="font-weight-light" v-text="'Friends'" />
+      <span class="primary--text">Geo</span> <span class="font-weight-light" v-text="'Friends'" />
     </v-toolbar-title>
-
     <v-spacer />
-
     <v-toolbar-items>
-      <v-btn icon>
-        <v-icon color="red">favorite</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>more_vert</v-icon>
-      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn flat v-text="'Sign In'" class="text-capitalize headline font-weight-light" />
+      <v-btn
+        :to="{ name: 'Signup' }"
+        flat
+        color="primary"
+        v-text="'Sign Up'"
+        class="text-capitalize headline"
+      />
     </v-toolbar-items>
   </v-toolbar>
 </template>

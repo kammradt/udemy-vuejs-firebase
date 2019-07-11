@@ -1,8 +1,12 @@
 <template>
-  <v-flex google-map id="map" />
+  <div>
+    <!-- <Search class="search" /> -->
+    <v-flex class="google-map" id="map" />
+  </div>
 </template>
 
 <script>
+/* eslint-disable */
 import Search from '@/components/Search'
 export default {
   name: 'Index',
@@ -41,5 +45,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+}
+.search {
+  z-index: 1;
 }
 </style>

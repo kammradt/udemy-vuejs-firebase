@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import db from '@/firebase/init'
+
 export default {
   name: 'Index',
   data () {
@@ -14,7 +17,41 @@ export default {
     }
   },
   mounted () {
-    this.renderMap()
+    // Getting the current authenticated user
+    let user = firebase.auth().currentUser
+
+    // Getting the geolocation of user with browser tool
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(currentPosition => {
+        this.lat = currentPosition.coords.latitude
+        this.lng = currentPosition.coords.longitude
+
+        // Finding the user record and adding the geolocation to it
+        db.collection('users')
+          .where('user_id', '==', user.uid)
+          .get()
+          .then(listOfDocs => {
+            listOfDocs.forEach((doc) => {
+              db.collection('users')
+                .doc(doc.id)
+                .update({
+                  geolocation: {
+                    lat: currentPosition.coords.latitude,
+                    lng: currentPosition.coords.longitude
+                  }
+                })
+            })
+          }).then(() => {
+            this.renderMap()
+          })
+      }, (error) => {
+        console.log(error)
+        this.renderMap()
+      }, { maximumAge: 60000, timeout: 3000, enableHighAccuracy: true })
+    } else {
+      // Setting up the map with default values
+      this.renderMap()
+    }
   },
   methods: {
     renderMap () {

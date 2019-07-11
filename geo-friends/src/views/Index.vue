@@ -1,13 +1,10 @@
 <template>
   <div>
-    <!-- <Search class="search" /> -->
     <v-flex class="google-map" id="map" />
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import Search from '@/components/Search'
 export default {
   name: 'Index',
   data () {
@@ -15,9 +12,6 @@ export default {
       lat: -26.2774326,
       lng: -48.8739195
     }
-  },
-  components: {
-    Search
   },
   mounted () {
     this.renderMap()

@@ -118,6 +118,7 @@ export default {
     },
     showFeedback (text) {
       this.feedback = text
+      // eslint-disable-next-line
       setTimeout(() => this.feedback = '', 4000)
     }
   }

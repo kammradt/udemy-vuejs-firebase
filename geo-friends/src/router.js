@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase'
-import Index from './views/Index.vue'
+import Index from '@/views/Index.vue'
 import Signup from '@/views/Signup'
 import Signin from '@/views/Signin'
+import ViewProfile from '@/views/ViewProfile'
 
 Vue.use(Router)
 
@@ -28,6 +29,14 @@ const router = new Router({
       path: '/signin',
       name: 'Signin',
       component: Signin
+    },
+    {
+      path: '/profile/:id',
+      name: 'ViewProfile',
+      component: ViewProfile,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

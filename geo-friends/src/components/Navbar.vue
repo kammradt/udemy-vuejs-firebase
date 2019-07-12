@@ -8,6 +8,7 @@
       <v-spacer></v-spacer>
       <v-btn
         :to="{ name: 'Signin' }"
+        v-if="!user"
         flat
         fab
         v-text="'Sign In'"
@@ -15,6 +16,7 @@
       />
       <v-btn
         :to="{ name: 'Signup' }"
+        v-if="!user"
         flat
         fab
         color="primary"
@@ -22,7 +24,14 @@
         class="text-capitalize"
       />
       <v-btn
+        v-if="user"
+        flat
+        v-text="user.email"
+        class="text-none font-weight-light"
+      />
+      <v-btn
         @click="logout"
+        v-if="user"
         flat
         fab
         v-text="'Logout'"
@@ -37,6 +46,20 @@ import firebase from 'firebase'
 
 export default {
   name: 'Navbar',
+  data () {
+    return {
+      user: null
+    }
+  },
+  created () {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user
+      } else {
+        this.user = null
+      }
+    })
+  },
   methods: {
     goToIndex () {
       this.$router.push({ name: 'Index' })

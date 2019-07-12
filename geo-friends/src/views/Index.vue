@@ -12,8 +12,8 @@ export default {
   name: 'Index',
   data () {
     return {
-      lat: -26.2774326,
-      lng: -48.8739195
+      lat: 39.913818,
+      lng: 116.363625
     }
   },
   mounted () {
@@ -57,10 +57,29 @@ export default {
     renderMap () {
       const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: this.lat, lng: this.lng },
-        zoom: 18,
+        zoom: 2,
         maxZoom: 30,
         minZoom: 3,
         streetViewControl: false
+      })
+
+      db.collection('users').get().then(users => {
+        users.docs.forEach(doc => {
+          let data = doc.data()
+          if (data.geolocation) {
+            let marker = new google.maps.Marker({
+              position: {
+                lat: data.geolocation.lat,
+                lng: data.geolocation.lng
+              },
+              map
+            })
+            // add click event to Marker
+            marker.addListener('click', () => {
+              console.log(doc.id)
+            })
+          }
+        })
       })
     }
   }

@@ -99,7 +99,7 @@ export default {
             firebase.auth()
               .createUserWithEmailAndPassword(this.form.email, this.form.password)
               .then(credentials => {
-                db.collection('users').doc(this.form.nickname).set({
+                db.collection('users').doc(this.form.slug).set({
                   nickname: this.form.nickname,
                   geolocation: null,
                   user_id: credentials.user.uid

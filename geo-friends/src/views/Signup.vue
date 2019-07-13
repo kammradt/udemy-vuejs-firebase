@@ -59,6 +59,7 @@
 import slugift from 'slugify'
 import db from '@/firebase/init'
 import firebase from 'firebase'
+import functions from 'firebase/functions'
 
 export default {
   name: 'Signup',
@@ -90,15 +91,16 @@ export default {
           lower: true
         })
 
-        let search = db.collection('users').doc(this.form.slug)
-        search.get().then(doc => {
-          if (doc.exists) {
+        let checkNickname = firebase.functions().httpsCallable('checkNickname')
+        checkNickname({ nickname: this.form.slug }).then(response => {
+          console.log(response)
+          if (!response.data.isUnique) {
             this.showFeedback('This nickname already exist!')
           } else {
             firebase.auth()
               .createUserWithEmailAndPassword(this.form.email, this.form.password)
               .then(credentials => {
-                search.set({
+                db.collection('users').doc(this.form.nickname).set({
                   nickname: this.form.nickname,
                   geolocation: null,
                   user_id: credentials.user.uid
@@ -111,7 +113,6 @@ export default {
               })
           }
         })
-        // this.$refs.form.reset()
       } else {
         this.showFeedback('Fill fields correctly!')
       }
@@ -119,7 +120,7 @@ export default {
     showFeedback (text) {
       this.feedback = text
       // eslint-disable-next-line
-      setTimeout(() => this.feedback = '', 4000)
+      setTimeout(() => this.feedback = null, 4000)
     }
   }
 }

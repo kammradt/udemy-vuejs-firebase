@@ -93,7 +93,6 @@ export default {
 
         let checkNickname = firebase.functions().httpsCallable('checkNickname')
         checkNickname({ nickname: this.form.slug }).then(response => {
-          console.log(response)
           if (!response.data.isUnique) {
             this.showFeedback('This nickname already exist!')
           } else {
